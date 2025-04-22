@@ -6,7 +6,7 @@ phases:
       nodejs: 18
     commands:
       - echo Installing NPM dependencies...
-      - npm ci  # dùng ci thay vì install nếu bạn dùng CI/CD để đảm bảo sạch và nhanh hơn
+      - npm ci # dùng ci thay vì install nếu bạn dùng CI/CD để đảm bảo sạch và nhanh hơn
 
   build:
     commands:
@@ -15,5 +15,5 @@ phases:
 
 artifacts:
   files:
-    - '**/*'
+    - "**/*"
   base-directory: build
