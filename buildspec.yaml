@@ -5,11 +5,7 @@ phases:
       nodejs: 18
     commands:
       - echo Installing NPM dependencies
-      - npm install
-  #  pre_build:
-  #    commands:
-  #      - echo Installing NPM dependencies
-  #      - npm install
+      - npm ci
   build:
     commands:
       - echo Build started on date
@@ -19,8 +15,17 @@ phases:
       - echo "Checking build folder..."
       - ls -la ./build
       - echo "Uploading to S3..."
-      - aws s3 cp --recursive ./build s3://demoapi31static/ --region ap-southeast-1
-      - aws cloudfront create-invalidation --distribution-id E*****  --paths /*
+      - |
+        if ! aws s3 cp --recursive ./build s3://demoapi31static/ --region ap-southeast-1; then
+          echo "S3 upload failed!"
+          exit 1
+        fi
+      - echo "Invalidating CloudFront cache..."
+      - |
+        if ! aws cloudfront create-invalidation --distribution-id E***** --paths /*; then
+          echo "CloudFront invalidation failed!"
+          exit 1
+        fi
 artifacts:
   files:
     - "**/*"
