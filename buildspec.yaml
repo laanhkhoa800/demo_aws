@@ -14,10 +14,6 @@ phases:
     commands:
       - echo "Checking build folder..."
       - ls -la ./build
-      - echo "Uploading to S3..."
-      - aws s3 cp --recursive ./build s3://demoapi31static/ --region ap-southeast-1 --debug
-      - echo "Invalidating CloudFront cache..."
-      - aws cloudfront create-invalidation --distribution-id E***** --paths /*
 artifacts:
   files:
     - "**/*"
